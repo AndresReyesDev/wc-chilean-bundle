@@ -24,6 +24,7 @@ class Wc_Chilean_Bundle_Logic
             'class' => array('form-row-wide'),
             'clear' => true,
             'priority' => 1,
+            'maxlength' => 9
         );
 
         return $fields;
@@ -56,6 +57,10 @@ class Wc_Chilean_Bundle_Logic
 
     public function after_checkout_validation($fields, $errors)
     {
+        if ($fields['billing_rut'] < 8 || $fields['billing_rut'] > 9) {
+            $errors->add('length', 'La longitud del rut ingresado es incorrecta');
+        }
+        
         $r = strtoupper(preg_replace('/[^k0-9]/i', '', $fields['billing_rut']));
         $sub_rut = substr($r, 0, strlen($r) - 1);
         $sub_dv = substr($r, -1);
