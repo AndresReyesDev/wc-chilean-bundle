@@ -57,7 +57,7 @@ class Wc_Chilean_Bundle_Logic
 
     public function after_checkout_validation($fields, $errors)
     {
-        if ($fields['billing_rut'] < 8 || $fields['billing_rut'] > 9) {
+        if (strlen($fields['billing_rut']) < 8 || strlen($fields['billing_rut']) > 9) {
             $errors->add('length', 'La longitud del rut ingresado es incorrecta');
         }
         
